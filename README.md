@@ -8,7 +8,7 @@ Copyright (C) 2013 Laurent Eschenauer <laurent@eschenauer.be>
 Bitsign: Sign a message with a bitcoin key
 ---------------------------------
 
-In this example, I sign the string "Hello, World" with my key labeled 'twitter' in my wallet.
+In this example, I sign the string "Hello, World" with my key labeled 'mytestkey' in my wallet.
 As you can see, the command prompts for the passphrase, it is used only within the timeframe 
 of the transaction and immediately forgotten.
 
