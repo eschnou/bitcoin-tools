@@ -1,0 +1,15 @@
+var config = {
+                // The hostname with the bitcoind server
+                host: "localhost"
+
+                // The port on which the rpc server is listening
+                ,port: 8332   
+
+                // The rpc username
+                ,user: "username"
+
+                // The rpc password
+                ,password: "password"
+};
+
+exports.data = config;

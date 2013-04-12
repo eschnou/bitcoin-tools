@@ -9,6 +9,7 @@
   }
 , "main" : "./lib/bitplay"
 , "dependencies" : {
-    "bitcoin"   : "1.6.x"
+    "bitcoin"   : "1.6.x",
+    "read"      : "*"
   }
 }
