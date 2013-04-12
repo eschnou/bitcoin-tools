@@ -1,0 +1,14 @@
+{ "name" : "bitplay"
+, "description" : "Just playing with the bitcoin API."
+, "engines": { "node" : ">=0.8.0" }
+, "version": "v0.1.0"
+, "keywords": ["bitcoin"]
+, "author": "Laurent Eschenauer <laurent@eschenauer.be> (http://eschnou.com)"
+, "bin" : { 
+        "status" : "./bin/status.js"
+  }
+, "main" : "./lib/bitplay"
+, "dependencies" : {
+    "bitcoin"   : "1.6.x"
+  }
+}
