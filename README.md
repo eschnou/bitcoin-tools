@@ -1,7 +1,8 @@
-node-bitplay
-===========
+node-bitcoin-tools
+===================
 
-Just playing with the bitcoin API and NodeJS, experimenting with various ideas. Not much for now.
+Just playing with the bitcoin API and NodeJS, crafting little command line tools
+wrapping the bitcoind API. 
 
 Copyright (C) 2013 Laurent Eschenauer <laurent@eschenauer.be>
 
