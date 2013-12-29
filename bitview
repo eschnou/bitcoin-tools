@@ -1,0 +1,74 @@
+#!/usr/bin/env node
+
+/*
+ * node-bitplay - Various utilities for playing with Bitcoin with node.js
+ * 
+ * Copyright (C) 2013 Laurent Eschenauer <laurent@eschenauer.be>
+ * 
+ * Permission is hereby granted, free of charge, to any person obtaining a copy
+ * of this software and associated documentation files (the "Software"), to deal
+ * in the Software without restriction, including without limitation the rights
+ * to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+ * copies of the Software, and to permit persons to whom the Software is
+ * furnished to do so, subject to the following conditions:
+ * 
+ * The above copyright notice and this permission notice shall be included in
+ * all copies or substantial portions of the Software.
+ * 
+ * THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+ * IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+ * FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+ * AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+ * LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+ * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+ * THE SOFTWARE.
+*/
+
+var bitcoin = require('bitcoin');
+var read = require('read');
+var config = require('./config.js');
+
+// Initialize the bitcoin client
+var client = new bitcoin.Client({
+      host: config.host,
+      port: config.port,
+      user: config.user,
+      pass: config.password
+});
+
+// Sign a message with the key associated with an account (label)
+var update = function(account, message, callback) {
+    client.listSinceBlock(function(err, result) {
+          if (err) return callback(err);
+          if (! 'lastblock' in result) return callback(new Error("Did not find any block."));
+          client.getBlock(result.lastblock, function(err, result) {
+              if (err) return callback(err);
+              if (! 'tx' in result || result.tx.length ==0) return callback(new Error("No transactions in block."));
+              client.getRawTransaction(result.tx[1], function(err, result) {
+                  if (err) return callback(err);
+                  client.decodeRawTransaction(result, function(err, result) {
+                      if (err) return callback(err);
+                      console.log("%j", result);
+                  });
+              });
+          });
+    });
+}
+
+var main = function(argv) {
+        // Wrap the request in a try.. catch to nicely die on errors
+        try {
+                update(function(err, result) {
+                  if (err) return error(err);
+                }); 
+        } catch (error) {
+                error(error);
+        }
+};
+
+var error = function(error) {
+      console.log("Error: " + error.message);
+      process.exit(-1);
+}; 
+
+main(process.argv);
